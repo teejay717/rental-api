@@ -32,6 +32,8 @@ export class PropertiesController {
 
   @ApiOperation({ summary: 'Create a property' })
   @ApiResponse({ status: 201, description: 'Property Created' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Access denied' })
   @Roles(Role.OWNER, Role.ADMIN)
   @Post()
   create(@Body() dto: CreatePropertyDto, @Request() req) {
@@ -40,6 +42,7 @@ export class PropertiesController {
 
   @ApiOperation({ summary: 'Get all properties' })
   @ApiResponse({ status: 200, description: 'List of properties' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Roles(Role.OWNER, Role.ADMIN)
   @Get()
   findAll(@Request() req) {
@@ -49,6 +52,7 @@ export class PropertiesController {
   @ApiOperation({ summary: 'Get one property' })
   @ApiResponse({ status: 200, description: 'Property details' })
   @ApiResponse({ status: 404, description: 'Property not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Roles(Role.OWNER, Role.ADMIN)
   @Get(':id')
   findOne(@Param('id') id: string, @Request() req) {
@@ -58,6 +62,7 @@ export class PropertiesController {
   @ApiOperation({ summary: 'Update property' })
   @ApiResponse({ status: 200, description: 'Property updated' })
   @ApiResponse({ status: 404, description: 'Property not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Roles(Role.OWNER, Role.ADMIN)
   @Patch(':id')
   update(
@@ -71,6 +76,7 @@ export class PropertiesController {
   @ApiOperation({ summary: 'Delete property' })
   @ApiResponse({ status: 200, description: 'Property deleted' })
   @ApiResponse({ status: 404, description: 'Property not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Roles(Role.OWNER, Role.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string, @Request() req) {
