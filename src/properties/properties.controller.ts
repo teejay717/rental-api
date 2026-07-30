@@ -28,7 +28,7 @@ import { Role } from 'generated/prisma/enums'; // enum
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('properties')
 export class PropertiesController {
-  constructor(private readonly propertiesService: PropertiesService) {}
+  constructor(private propertiesService: PropertiesService) {}
 
   @ApiOperation({ summary: 'Create a property' })
   @ApiResponse({ status: 201, description: 'Property Created' })
