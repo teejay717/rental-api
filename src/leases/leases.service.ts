@@ -199,8 +199,19 @@ export class LeasesService {
 
     const lease = await this.findOne(id, userId, userRole);
 
-    return this.prisma.lease.delete({
-      where: { id },
+    return this.prisma.$transaction(async (tx) => {
+      const deletedLease = await tx.lease.delete({
+        where: { id },
+      });
+
+      await tx.unit.update({
+        where: { id: lease.unitId },
+        data: {
+          status: UnitStatus.VACANT,
+        },
+      });
+
+      return deletedLease;
     });
   }
 }

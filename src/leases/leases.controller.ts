@@ -28,7 +28,7 @@ import { UpdateLeaseDto } from './dto/update-lease.dto';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('leases')
 export class LeasesController {
-  constructor(private readonly leasesService: LeasesService) {}
+  constructor(private leasesService: LeasesService) {}
 
   @ApiOperation({ summary: 'Create a lease' })
   @ApiResponse({
