@@ -174,6 +174,24 @@ All protected endpoints require:
 
 ---
 
+## Testing the API
+
+1. Register a user via `POST /auth/register`. All new users default to the `TENANT` role.
+2. To test OWNER or ADMIN functionality, promote a user's role manually:
+   - Open Prisma Studio:
+     ```bash
+     npx prisma studio
+     ```
+   - Open the `User` table, find your registered user, and change `role` from `TENANT` to `OWNER` (or `ADMIN`).
+3. Log in again via `POST /auth/login` to get a fresh token reflecting the updated role (the JWT payload is signed at login time, so a stale token will still show the old role).
+4. Use the returned `access_token` in Swagger's **Authorize** button (top right of `/api`) to test protected endpoints.
+
+**Suggested test flow:**
+
+- Register/promote an OWNER → create a Property → create a Unit under it → register a second user (stays TENANT) → create a Lease linking that Unit and Tenant → create a Payment against that Lease.
+
+---
+
 ## Assumptions / Design Decisions
 
 - **Authentication is required.** The prompt states information should be protected from users who shouldn't access it, which implies auth is necessary even though it wasn't explicitly mandated.
